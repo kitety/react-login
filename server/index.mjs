@@ -1,7 +1,7 @@
 import express from 'express';
 let app = express()
 app.get('/', (req, res) => {
-  res.send('Hello world')
+  res.send('Hello')
 })
 
 app.listen(6060, () => {
