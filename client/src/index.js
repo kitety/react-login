@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux'
@@ -9,6 +8,8 @@ import { logger } from 'redux-logger'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk';
 import NavigetionBar from './components/NavigetionBar';
+import { BrowserRouter as Router } from 'react-router-dom';
+import routers from './routers'
 
 const store = createStore(
   RootReducer,
@@ -19,7 +20,13 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <NavigetionBar />
+    <Router>
+      <div>
+        {/* 上面导航栏 下面组件.routers实际返回的是div */}
+        <NavigetionBar />
+        {routers}
+      </div>
+    </Router>
   </Provider>,
   document.getElementById('root'));
 
