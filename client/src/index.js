@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux'
@@ -8,6 +8,7 @@ import RootReducer from './reducers'
 import { logger } from 'redux-logger'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk';
+import NavigetionBar from './components/NavigetionBar';
 
 const store = createStore(
   RootReducer,
@@ -18,7 +19,7 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <NavigetionBar />
   </Provider>,
   document.getElementById('root'));
 
