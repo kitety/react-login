@@ -16,10 +16,10 @@ class SignForm extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     // axios.post('/api/post', { users: this.state })
-    this.props.userSignupRequset(this.state)
+    this.props.userSignupRequest(this.state)
   }
   static propTypes = {
-    userSignupRequset: PropTypes.func.isRequired
+    userSignupRequest: PropTypes.func.isRequired
   };
   render() {
     return (
