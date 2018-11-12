@@ -17,6 +17,9 @@ const validataInput = (data) => {
   if (validator.isEmpty(data.passwordConfirm)) {
     errors.passwordConfirm = " The field is required."
   }
+  if (!validator.equals(data.password, data.passwordConfirm)) {
+    errors.passwordConfirm = "Password must match."
+  }
   return {
     errors,
     isValid: isEmpty(errors)

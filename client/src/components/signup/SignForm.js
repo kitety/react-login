@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames'
 class SignForm extends Component {
   constructor(props) {
     super(props);
@@ -7,7 +8,9 @@ class SignForm extends Component {
       username: '',
       email: '',
       password: '',
-      passwordConfirm: ''
+      passwordConfirm: '',
+      errors: '',
+      isLoading: false
     }
   }
   onChange = (e) => {
@@ -15,13 +18,19 @@ class SignForm extends Component {
   }
   onSubmit = (e) => {
     e.preventDefault();
+    // 不要在这里直接请求 在栽面统一管理
     // axios.post('/api/post', { users: this.state })
-    this.props.userSignupRequest(this.state)
+    this.setState({ errors: '', isLoading: true })
+    this.props.userSignupRequest(this.state).then(
+      () => { },
+      ({ response }) => { this.setState({ errors: response.data, isLoading: false }) }
+    )
   }
   static propTypes = {
     userSignupRequest: PropTypes.func.isRequired
   };
   render() {
+    const { errors } = this.state
     return (
       <form onSubmit={this.onSubmit}>
         <h1>Join our community!</h1>
@@ -32,8 +41,9 @@ class SignForm extends Component {
             onChange={this.onChange}
             type="text"
             name="username"
-            className="form-control"
+            className={classnames("form-control", { "is-invalid": errors.username })}
           />
+          {errors.username && <span className="form-text text-muted">{errors.username}</span>}
         </div>
         <div className="form-group">
           <label className="control-label">Email</label>
@@ -42,8 +52,11 @@ class SignForm extends Component {
             onChange={this.onChange}
             type="email"
             name="email"
-            className="form-control"
+            className={classnames("form-control", { "is-invalid": errors.email })}
+
           />
+          {errors.email && <span className="form-text text-muted">{errors.email}</span>}
+
         </div>
         <div className="form-group">
           <label className="control-label">Password</label>
@@ -52,8 +65,11 @@ class SignForm extends Component {
             onChange={this.onChange}
             type="password"
             name="password"
-            className="form-control"
+            className={classnames("form-control", { "is-invalid": errors.password })}
+
           />
+          {errors.password && <span className="form-text text-muted">{errors.password}</span>}
+
         </div>
         <div className="form-group">
           <label className="control-label">Confirm</label>
@@ -62,11 +78,14 @@ class SignForm extends Component {
             onChange={this.onChange}
             type="password"
             name="passwordConfirm"
-            className="form-control"
+            className={classnames("form-control", { "is-invalid": errors.passwordConfirm })}
+
           />
+          {errors.passwordConfirm && <span className="form-text text-muted">{errors.passwordConfirm}</span>}
+
         </div>
         <div className="form-group">
-          <button className="btn btn-primary btn-lg"> Sign Up</button>
+          <button className="btn btn-primary btn-lg" disabled={this.state.isLoading}> Sign Up</button>
         </div>
       </form>
     );
