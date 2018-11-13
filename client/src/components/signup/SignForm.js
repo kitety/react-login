@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames'
+// 新的方法1
+import {withRouter} from 'react-router-dom'
 class SignForm extends Component {
   constructor(props) {
     super(props);
@@ -13,6 +15,9 @@ class SignForm extends Component {
       isLoading: false
     }
   }
+  static contextTypes = {
+    router: PropTypes.object
+  }
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })
   }
@@ -22,7 +27,10 @@ class SignForm extends Component {
     // axios.post('/api/post', { users: this.state })
     this.setState({ errors: '', isLoading: true })
     this.props.userSignupRequest(this.state).then(
-      () => { this.props.history.push('/') },
+      () => {
+        // Fthis.props.history.push('/')
+      this.context.router.history.push('/')
+    },
       ({ response }) => { this.setState({ errors: response.data, isLoading: false }) }
     )
   }
@@ -92,5 +100,5 @@ class SignForm extends Component {
   }
 }
 
-export default SignForm;
+export default withRouter(SignForm);
 ;

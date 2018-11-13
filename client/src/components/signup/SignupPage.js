@@ -14,7 +14,8 @@ class SignupPage extends Component {
       <div className="row">
         <div className="col-md-3"></div>
         <div className="col-md-6">
-          <SignForm userSignupRequest={this.props.userSignupRequest} history={this.props.history}/>
+          {/* 路由跳转方法1省去了history={this.props.history}传值 */}
+          <SignForm userSignupRequest={this.props.userSignupRequest} />
         </div>
         <div className="col-md-3"></div>
       </div>
