@@ -22,7 +22,7 @@ class SignForm extends Component {
     // axios.post('/api/post', { users: this.state })
     this.setState({ errors: '', isLoading: true })
     this.props.userSignupRequest(this.state).then(
-      () => { },
+      () => { this.props.history.push('/') },
       ({ response }) => { this.setState({ errors: response.data, isLoading: false }) }
     )
   }
