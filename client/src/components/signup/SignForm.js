@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames'
 // 新的方法1
-import {withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 class SignForm extends Component {
   constructor(props) {
     super(props);
@@ -18,6 +18,10 @@ class SignForm extends Component {
   static contextTypes = {
     router: PropTypes.object
   }
+  static propTypes = {
+    userSignupRequest: PropTypes.func.isRequired,
+    addFlashMessage: PropTypes.func.isRequired
+  };
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })
   }
@@ -29,14 +33,15 @@ class SignForm extends Component {
     this.props.userSignupRequest(this.state).then(
       () => {
         // Fthis.props.history.push('/')
-      this.context.router.history.push('/')
-    },
+        this.props.addFlashMessage({
+          type:'success',
+          text:'You signed successfully! Welcome!'
+        })
+        this.context.router.history.push('/')
+      },
       ({ response }) => { this.setState({ errors: response.data, isLoading: false }) }
     )
   }
-  static propTypes = {
-    userSignupRequest: PropTypes.func.isRequired
-  };
   render() {
     const { errors } = this.state
     return (
