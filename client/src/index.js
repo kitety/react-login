@@ -10,6 +10,7 @@ import thunk from 'redux-thunk';
 import NavigetionBar from './components/NavigetionBar';
 import { BrowserRouter as Router } from 'react-router-dom';
 import routers from './routers'
+import FlashMessageList from './components/flash/FlashMessageList'
 
 const store = createStore(
   RootReducer,
@@ -24,6 +25,7 @@ ReactDOM.render(
       <div>
         {/* 上面导航栏 下面组件.routers实际返回的是div */}
         <NavigetionBar />
+        <FlashMessageList/>
         {routers}
       </div>
     </Router>
