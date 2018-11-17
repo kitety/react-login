@@ -1,6 +1,6 @@
 // Update with your config settings.
 
-module.exports = {
+export default {
   // 注意用户名和密码
   development: {
     client: 'postgresql',

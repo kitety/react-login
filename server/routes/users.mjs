@@ -1,7 +1,8 @@
 import express from 'express';
 import isEmpty from 'lodash/isEmpty'
 import validator from 'validator'
-import User from '../models/user'
+import User from '../models/user.mjs'
+import bcrypt from 'bcrypt'
 
 let router = express.Router()
 const validataInput = (data) => {
@@ -29,8 +30,15 @@ const validataInput = (data) => {
 router.post('/', (req, res) => {
   const { errors, isValid } = validataInput(req.body)
   if (isValid) {
-    
-    res.json({success:true})
+    const { username, password, email } = req.body;
+    // 对密码十位hash加密
+    const password_digest = bcrypt.hashSync(password, 10);
+    // 存储,并且有时间戳
+    User.forge({
+      username, password_digest, email
+    }, { hasTimestamps: true }).save()
+      .then(() => { res.json({ success: true }) })
+      .catch(err => { res.status(404).json(err) })
   } else {
     return res.status(404).json(errors)
   }
