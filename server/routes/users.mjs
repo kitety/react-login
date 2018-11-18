@@ -8,23 +8,42 @@ import Promise from 'bluebird'
 let router = express.Router()
 const validataInput = (data, otherValiddations) => {
   let { errors } = otherValiddations(data);
-  return Promise.all([
-    User.where({ email: data.email }).fetch().then(user => {
-      if (user) {
-        errors.email = 'There is a such email'
+  return User.query({
+    where: { email: data.email },
+    orWhere: { username: data.username }
+  }).fetch().then(user => {
+    if (user) {
+      if (user.get('email') === data.email) {
+        errors.email = 'There is an email with such email'
       }
-    }),
-    User.where({ username: data.username }).fetch().then(user => {
-      if (user) {
-        errors.username = 'There is a such username'
+      if (user.get('username') === data.username) {
+        errors.username = 'There is a username with such username'
       }
-    })
-  ]).then(() => {
+    }
     return {
       errors,
       isValid: isEmpty(errors)
     }
   })
+
+  // Promise 版本
+  // return Promise.all([
+  //   User.where({ email: data.email }).fetch().then(user => {
+  //     if (user) {
+  //       errors.email = 'There is an email with such email'
+  //     }
+  //   }),
+  //   User.where({ username: data.username }).fetch().then(user => {
+  //     if (user) {
+  //       errors.username = 'There is a username with such username'
+  //     }
+  //   })
+  // ]).then(() => {
+  //   return {
+  //     errors,
+  //     isValid: isEmpty(errors)
+  //   }
+  // })
 }
 // 基础验证
 const commonValidataInput = (data) => {
