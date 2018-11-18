@@ -3,7 +3,7 @@ import isEmpty from 'lodash/isEmpty'
 import validator from 'validator'
 import User from '../models/user.mjs'
 import bcrypt from 'bcrypt'
-import Promise from 'bluebird'
+// import Promise from 'bluebird'
 
 let router = express.Router()
 const validataInput = (data, otherValiddations) => {
@@ -83,6 +83,22 @@ router.post('/', (req, res) => {
     } else {
       return res.status(404).json(errors)
     }
+  })
+})
+router.get('/username/:identifier', (req, res) => {
+  User.query({
+    select: ['username', 'email'],
+    where: { username: req.params.identifier }
+  }).fetch().then(user=>{
+    res.json({user})
+  })
+})
+router.get('/email/:identifier', (req, res) => {
+  User.query({
+    select: [ 'email'],
+    where: { email: req.params.identifier },
+  }).fetch().then(user=>{
+    res.json({user})
   })
 })
 export default router;
