@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import classnames from 'classnames'
 import validateInput from '../../utils/validations/login'
+import { connect } from 'react-redux'
+import { login } from '../../actions/login'
+import PropTypes from 'prop-types';
+
 
 class LoginForm extends Component {
   constructor(props) {
@@ -11,6 +15,12 @@ class LoginForm extends Component {
       errors: {},
       isLoading: false
     }
+  }
+  static propTypes = {
+    login: PropTypes.func.required
+  }
+  static contextTypes = {
+    router: PropTypes.object.required
   }
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })
@@ -25,6 +35,11 @@ class LoginForm extends Component {
   onSubmit = e => {
     e.preventDefault();
     if (this.isValid()) {
+      this.setState({ errors: {}, isLoading: true })
+      this.props.login(this.state).then(
+        () => { this.context.router.push('/') },
+        (err) => { this.setState({ errors: err, isLoading: false }) }
+      )
     }
   }
   render() {
@@ -62,4 +77,4 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+export default connect(null, { login })(LoginForm);
