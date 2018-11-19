@@ -36,7 +36,7 @@ class SignForm extends Component {
     this.setState({ errors: '', isLoading: true })
     this.props.userSignupRequest(this.state).then(
       () => {
-        // Fthis.props.history.push('/')
+        // this.props.history.push('/')
         this.props.addFlashMessage({
           type: 'success',
           text: 'You signed successfully! Welcome!'

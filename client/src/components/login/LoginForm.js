@@ -17,10 +17,10 @@ class LoginForm extends Component {
     }
   }
   static propTypes = {
-    login: PropTypes.func.required
+    login: PropTypes.func.isRequired
   }
   static contextTypes = {
-    router: PropTypes.object.required
+    router: PropTypes.object.isRequired
   }
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })
