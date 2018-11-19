@@ -13,9 +13,11 @@ class NavigetionBar extends Component {
           <div className="collapse navbar-collapse" id="navbarsExample03">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item active">
+                <Link className="nav-link" to="/login">Login in <span className="sr-only">(current)</span></Link>
+              </li>
+              <li className="nav-item active">
                 <Link className="nav-link" to="/signup">Sign up <span className="sr-only">(current)</span></Link>
               </li>
-
             </ul>
           </div>
         </div>
