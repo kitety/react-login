@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classnames from 'classnames'
 import validateInput from '../../utils/validations/login'
 import { connect } from 'react-redux'
-import { login } from '../../actions/login'
+import { login } from '../../actions/loginActions'
 import PropTypes from 'prop-types';
 
 
@@ -37,7 +37,9 @@ class LoginForm extends Component {
     if (this.isValid()) {
       this.setState({ errors: {}, isLoading: true })
       this.props.login(this.state).then(
-        () => { this.context.router.history.push('/') },
+        () => {
+          this.context.router.history.push('/')
+        },
         (err) => {
           // 不清楚可以打印
           this.setState({ errors: err.response.data.errors, isLoading: false })
