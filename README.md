@@ -7,11 +7,11 @@ react-login from react+react-router+react-redux+postgresql+knex+bookshelf+nodejs
 前端
 ---
 ```javascript
-cd client 
+cd client
 npm run start
 ```
 
-后端 
+后端
 ---
 ```javascript
 npm run server

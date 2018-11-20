@@ -38,15 +38,20 @@ class LoginForm extends Component {
       this.setState({ errors: {}, isLoading: true })
       this.props.login(this.state).then(
         () => { this.context.router.push('/') },
-        (err) => { this.setState({ errors: err, isLoading: false }) }
+        (err) => {
+          // 不清楚可以打印
+          this.setState({ errors: err.response.data.errors, isLoading: false })
+        }
       )
     }
   }
   render() {
     const { identifier, password, errors, isLoading } = this.state
+    console.log(errors);
     return (
       <form onSubmit={this.onSubmit}>
         <h1>Login</h1>
+        {errors.form && <div className="alert alert-danger">{errors.form}</div>}
         <div className="form-group">
           <label className="control-label">Username / Email</label>
           <input
