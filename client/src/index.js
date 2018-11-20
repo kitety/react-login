@@ -11,6 +11,11 @@ import NavigetionBar from './components/NavigetionBar';
 import { BrowserRouter as Router } from 'react-router-dom';
 import routers from './routers'
 import FlashMessageList from './components/flash/FlashMessageList'
+import setAuthorizationToken from './utils/setAuthorizationToken'
+import { setCurrentUser } from './actions/loginActions'
+import jwtDecode from 'jwt-decode'
+
+
 
 const store = createStore(
   RootReducer,
@@ -18,6 +23,12 @@ const store = createStore(
     applyMiddleware(logger, thunk)
   )
 )
+// console.log(store);
+if (localStorage.jwtToken) {
+  setAuthorizationToken(localStorage.jwtToken);
+  // store 里面调用dispatch
+  store.dispatch(setCurrentUser(jwtDecode(localStorage.jwtToken)))
+}
 
 ReactDOM.render(
   <Provider store={store}>
@@ -25,7 +36,7 @@ ReactDOM.render(
       <div>
         {/* 上面导航栏 下面组件.routers实际返回的是div */}
         <NavigetionBar />
-        <FlashMessageList/>
+        <FlashMessageList />
         {routers}
       </div>
     </Router>
