@@ -37,7 +37,7 @@ class LoginForm extends Component {
     if (this.isValid()) {
       this.setState({ errors: {}, isLoading: true })
       this.props.login(this.state).then(
-        () => { this.context.router.push('/') },
+        () => { this.context.router.history.push('/') },
         (err) => {
           // 不清楚可以打印
           this.setState({ errors: err.response.data.errors, isLoading: false })
@@ -47,7 +47,6 @@ class LoginForm extends Component {
   }
   render() {
     const { identifier, password, errors, isLoading } = this.state
-    console.log(errors);
     return (
       <form onSubmit={this.onSubmit}>
         <h1>Login</h1>
