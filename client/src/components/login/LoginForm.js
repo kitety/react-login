@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classnames from 'classnames'
 import validateInput from '../../utils/validations/login'
 import { connect } from 'react-redux'
-import { login } from '../../actions/loginActions'
+import { login } from '../../actions/authActions'
 import PropTypes from 'prop-types';
 
 

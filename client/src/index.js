@@ -12,7 +12,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import routers from './routers'
 import FlashMessageList from './components/flash/FlashMessageList'
 import setAuthorizationToken from './utils/setAuthorizationToken'
-import { setCurrentUser } from './actions/loginActions'
+import { setCurrentUser } from './actions/authActions'
 import jwtDecode from 'jwt-decode'
 
 
