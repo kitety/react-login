@@ -1,8 +1,34 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
+
+
 
 class NavigetionBar extends Component {
+  static propTypes = {
+    auth: PropTypes.object.isRequired
+  }
   render() {
+    const { isAuthorization } = this.props.auth
+    const userLink = (
+      <ul className="navbar-nav mr-auto">
+        <li className="nav-item active">
+          <Link className="nav-link" to="/login">Logout <span className="sr-only">(current)</span></Link>
+
+        </li>
+      </ul>
+    )
+    const guestLink = (
+      <ul className="navbar-nav mr-auto">
+        <li className="nav-item active">
+          <Link className="nav-link" to="/login">Login<span className="sr-only">(current)</span></Link>
+        </li>
+        <li className="nav-item active">
+          <Link className="nav-link" to="/signup">Sign up <span className="sr-only">(current)</span></Link>
+        </li>
+      </ul>
+    )
     return (
       <nav className="navbar navbar-expand-sm navbar-light bg-light mb-3">
         <div className="container">
@@ -11,14 +37,7 @@ class NavigetionBar extends Component {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarsExample03">
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item active">
-                <Link className="nav-link" to="/login">Login in <span className="sr-only">(current)</span></Link>
-              </li>
-              <li className="nav-item active">
-                <Link className="nav-link" to="/signup">Sign up <span className="sr-only">(current)</span></Link>
-              </li>
-            </ul>
+            {isAuthorization ? userLink : guestLink}
           </div>
         </div>
       </nav>
@@ -27,4 +46,9 @@ class NavigetionBar extends Component {
   }
 }
 
-export default NavigetionBar
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth
+  }
+}
+export default connect(mapStateToProps)(NavigetionBar)
