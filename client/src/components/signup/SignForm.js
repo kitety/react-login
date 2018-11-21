@@ -66,7 +66,7 @@ class SignForm extends Component {
   checkEmailExists = e => {
     let val = e.target.value;
     let field = e.target.name;
-    console.dir(e.target)
+    // console.dir(e.target)
     if (val !== "") {
       this.props.isEmailExists(val).then(res => {
         let { errors, invalidEmail } = this.state

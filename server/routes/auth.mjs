@@ -13,7 +13,7 @@ router.post('/', (req, res) => {
     where: { username: identifier },
     orWhere: { email: identifier }
   }).fetch().then(user => {
-    console.log(res);
+    // console.log(res);
     if (user) {
       if (bcrypt.compareSync(password, user.get('password_digest'))) {
         const token = jwt.sign({
